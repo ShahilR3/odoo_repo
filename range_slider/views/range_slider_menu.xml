@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="range_slider_root" name="Range Slider"/>
+    <menuitem id="range_menu" action="action_range_menu" parent="range_slider_root"/>
+</odoo>

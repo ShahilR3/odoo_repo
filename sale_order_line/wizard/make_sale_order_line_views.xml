@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_sale_order_line_wizard_form" model="ir.ui.view">
+        <field name="name">make.sale.order,line.form</field>
+        <field name="model">make.sale.order.line</field>
+        <field name="arch" type="xml">
+            <form string="Update Order Date">
+                <group>
+                    <field name="partner_id"/>
+                    <field name="pricelist_id"/>
+                    <field name="sale_order_lines"/>
+                </group>
+                <footer>
+                    <button string="Create" type="object" name="action_create_sale_order" class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_create_sale_order" model="ir.actions.act_window">
+        <field name="name">Create sale order</field>
+        <field name="res_model">make.sale.order.line</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

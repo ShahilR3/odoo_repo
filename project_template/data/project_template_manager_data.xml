@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <record id="partner_madison_diaz" model="res.partner">
+        <field name="name">Madison Diaz</field>
+        <field name="email">madison@example.com</field>
+    </record>
+    <record id="user_madison_diaz" model="res.users">
+        <field name="name">Madison Diaz</field>
+        <field name="login">madison</field>
+        <field name="password">mad</field>
+        <field name="email">madison@example.com</field>
+        <field name="partner_id" ref="partner_madison_diaz"/>
+        <field name="groups_id" eval="[
+            Command.set([]),
+            Command.link(ref('base.group_user')),
+            Command.link(ref('project.group_project_manager')),
+            Command.link(ref('project_template.project_template_manager')),
+        ]"/>
+    </record>
+</odoo>

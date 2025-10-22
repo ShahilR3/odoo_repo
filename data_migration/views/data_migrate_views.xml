@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem name="Data Migrate" id="menu_data_migrate"
+              action="action_data_migrate_wizard"
+              parent="account.menu_finance_configuration"/>
+</odoo>

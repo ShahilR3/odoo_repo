@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="rent_lease_template">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <div class="container py-5 rent_lease_container">
+                    <h2 class="text-center mb-4" groups="base.group_user">Rent/Lease Form</h2>
+                    <form action="/webform/submit" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="tenant_id">Tenant</label>
+                                    <select name="tenant_id" id="tenant_id" class="form-control">
+                                        <t t-foreach="partners" t-as="partner">
+                                            <option t-att-value="partner.id">
+                                                <t t-esc="partner.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <br/>
+                                <div class="form-group">
+                                    <label for="property_type">Property Type</label>
+                                    <select name="property_type" id="property_type" class="form-control">
+                                        <option value="rent">Rent</option>
+                                        <option value="lease">Lease</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="start_date">Start Date</label>
+                                    <input type="date" id="start_date" name="start_date" class="form-control"/>
+                                </div>
+                                <br/>
+                                <div class="form-group">
+                                    <label for="end_date">End Date</label>
+                                    <input type="date" id="end_date" name="end_date" class="form-control"/>
+                                </div>
+                                <br/>
+                                <div class="form-group">
+                                    <span>Total Days</span>
+                                    <span type="number"
+                                          name="tot_days"
+                                          class="form-control tot_days">0
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="table col-12">
+                            <table class="table table-bordered mt-3" id="property_table">
+                                <thead>
+                                    <tr>
+                                        <th>Property</th>
+                                        <th>Owner Name</th>
+                                        <th>Date</th>
+                                        <th>Quantity</th>
+                                        <th>Invoiced Qty</th>
+                                        <th>Rent/Lease Amount</th>
+                                        <th>Total Amount</th>
+                                        <th width="5%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <table style="display: none">
+                                <tr class="property_new_lines">
+                                    <td>
+                                        <select name="property" class="form-control">
+                                            <option value="">Select Property</option>
+                                            <t t-foreach="property_id" t-as="product">
+                                                <option t-att-value="product.id">
+                                                    <t t-esc="product.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </td>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="click col-12 text-end">
+                            <button type="button"
+                                    class="btn btn-info add_property"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#customDialog">
+                                <i class="fa fa-plus"></i>
+                                Add Property
+                            </button>
+                        </div>
+                        <br/>
+                        <div class="o_group row align-items-start mt-2 mt-md-0" align="right">
+                            <div class="o_inner_group oe_subtotal_footer d-flex order-0 order-lg-1
+                                    flex-column">
+                                <h3>Total Amount:</h3>
+                                <div class="o_inner_group grid oe_subtotal_footer d-flex justify-content-end order-0 order-lg-1">
+                                    <div class="position-relative d-inline-block" style="width: fit-content;">
+                                        <span class="currency-symbol position-absolute top-50 start-0 translate-middle-y ps-1">
+                                            <t t-esc="currency_id.symbol"/>
+                                        </span>
+                                        <span name="total_amount"
+                                              class="total_amnt ps-4 border-0 start-10 text-end"
+                                              style="min-width: 100px;">0.00
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <button type="button"
+                                    class="custom_create btn btn-primary btn-block"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#customDialog">
+                                Create Request
+                            </button>
+                        </div>
+                        <div class="modal" id="customDialog" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Validation Error</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <span id="error_message" class="value"/>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

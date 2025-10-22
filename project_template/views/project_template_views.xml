@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="project_template_list_view" model="ir.ui.view">
+        <field name="name">project.template.list</field>
+        <field name="model">project.template</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="project_template_form_view" model="ir.ui.view">
+        <field name="name">project.template.form</field>
+        <field name="model">project.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_project_create" string="Create Project" type="object" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_get_property" type="object"
+                                class="oe_stat_button fa-solid" icon="fa-check">
+                            <field name="task_count" widget="statinfo" string="Tasks"/>
+                        </button>
+                    </div>
+                    <div>
+                        <h1>
+                            <field name="name" placeholder="eg.Office Party"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="label_tasks" string="Name of the Tasks" placeholder="e.g. Tasks"/>
+                            <field name="partner_id" widget="res_partner_many2one"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            <field name="tags_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="active" invisible="1"/>
+                            <field name="user_id" string="Project Manager" widget="many2one_avatar_user"
+                                   readonly="not active" domain="[('share', '=', False)]"
+                                   options="{'no_quick_create': True}"/>
+                            <field name="date_start" string="Planned Date" widget="daterange"
+                                   options='{"end_date_field": "date_end", "always_range": "1"}'
+                                   required="date_start or date_end"/>
+                            <field name="date_end" invisible="1" required="date_start"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="description" string="Description">
+                            <field name="description" options="{'resizable': false}"
+                                   placeholder="Project description..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_project_template" model="ir.actions.act_window">
+        <field name="name">Project Template</field>
+        <field name="res_model">project.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[
+            (ref('project_template_list_view'), 'list'),
+            (ref('project_template_form_view'), 'form'),
+        ]"/>
+    </record>
+</odoo>

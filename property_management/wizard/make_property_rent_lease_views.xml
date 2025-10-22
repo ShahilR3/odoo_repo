@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="property_management_wizard" model="ir.ui.view">
+        <field name="name">property_management_wizard_form</field>
+        <field name="model">make.property.rent.lease</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="property_id"/>
+                        <field name="tenant_id"/>
+                        <field name="owner_id"/>
+                        <field name="type"/>
+                        <field name="state"/>
+                    </group>
+                    <group>
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_create_pdf" class="oe_highlight" type="object" string="Create PDF"/>
+                    <button name="action_create_xlsx" class="oe_highlight" type="object" string="Excel"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_property_management_wizard" model="ir.actions.act_window">
+        <field name="name">Rent/Lease Report</field>
+        <field name="res_model">make.property.rent.lease</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="property_management_wizard"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

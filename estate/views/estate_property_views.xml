@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_estate_property" model="ir.actions.act_window">
+            <field name="name">Property</field>
+            <field name="res_model">estate.property</field>
+            <field name="view_mode">list,form,kanban</field>
+            <field name="context">{'search_default_Available': 1}</field>
+        </record>
+        <record id="estate_list_edit" model="ir.ui.view">
+            <field name="name">estate.property.list</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <list decoration-success ="state == 'receive' or state == 'accept'" decoration-bf = "state=='accept'" decoration-muted = "state=='sold'" decoration-danger = "state == 'cancel'">
+                    <field name="name"/>
+                    <field name ="type_id"/>
+                    <field name = "Offers"/>
+                    <field name = "es_tag"/>
+                    <field name="postcode"/>
+                    <field name="bedrooms"/>
+                    <field name="living_area"/>
+                    <field name="expected_price"/>
+                    <field name="selling_price"/>
+                    <field name="date_availability" optional = "hidden"/>
+                </list>
+            </field>
+        </record>
+        <record id="estate_form_edit" model="ir.ui.view">
+            <field name="name">estate.property.form</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name = "sold" type = "object" string="Sold" class = "oe_highlight" invisible = "state == 'sold' or state == 'cancel'" />
+                        <button name = "cancel" type = "object" string = "Cancelled" invisible = "state == 'sold' or state == 'cancel'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="new,receive,accept,sold,cancel" options="{'clickable':'True'}"/>
+                    </header>
+                    <sheet>
+                        <group>
+                                <h1>
+                                    <field name = "name" placeholder = "Property Name"/>
+                                </h1>
+                        </group>
+                        <field name="es_tag" widget = "many2many_tags" options="{'color_field' : 'colors'}"/>
+                        <group>
+                            <group>
+                                <field name = "state"/>
+                                <field name = "type_id" widget ="many2one" options = "{'no_create' : True}"/>
+                                <field name = "postcode"/>
+                                <field name = "date_availability"/>
+                            </group>
+                            <group>
+                                <field name = "expected_price"/>
+                                <field name = "best_offer"/>
+                                <field name = "selling_price"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string = "Description">
+                                <group>
+                                    <field name = "description"/>
+                                    <field name = "bedrooms"/>
+                                    <field name = "living_area"/>
+                                    <field name = "facades"/>
+                                    <field name = "garage"/>
+                                    <field name = "garden"/>
+                                    <field name = "orientation" invisible = "garden == False"/>
+                                    <field name = "garden_area" invisible = "garden == False"/>
+                                    <field name = "total_area"/>
+                                    <field name = "active"/>
+                                </group>
+                            </page>
+                            <page string = "Offers">
+                                <field name = "Offers" readonly = "state == 'accept' or state == 'sold' or state == 'cancel'"/>
+                            </page>
+                             <page string = "Other Info">
+                                <group>
+                                    <field name = "salesmen"/>
+                                    <field name = "vendor"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="estate_search_edit" model="ir.ui.view">
+            <field name="name">estate.property.search</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="es_tag"/>
+                    <field name = "type_id"/>
+                    <field name="postcode"/>
+                    <field name="bedrooms"/>
+                    <field name="expected_price"/>
+                    <field name="selling_price"/>
+                    <field name="date_availability"/>
+                    <filter name = "Available" domain = "['|',('state','=','new'),('state','=','receive')]"/>
+                    <filter name = "Active" domain = "[('active' ,'=',False)]"/>
+                    <field name = "living_area" filter_domain = "[('living_area','>=',self)]"/>
+                    <group>
+                        <filter string = "Postcode" name = "postcode" context = "{'group_by':'postcode'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+    </data>
+</odoo>

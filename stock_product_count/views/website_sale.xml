@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="website_sale_products_item_qty" inherit_id="website_sale.products_item" name="Quantity">
+        <xpath expr="//div[contains(@class, 'o_wsale_product_information')]" position="inside">
+            <t t-if="product.product_wh_qty > 0">
+                <div class="text-success small">
+                    <t t-esc="product.product_wh_qty"/> in stock
+                </div>
+            </t>
+            <t t-else="">
+                <div class="text-danger small">Out of stock</div>
+            </t>
+        </xpath>
+    </template>
+    <template id="website_sale_product_qty_after_addtocart" inherit_id="website_sale.product" name="Available Quantity">
+        <xpath expr="//div[contains(@id, 'add_to_cart_wrap')] " position="after">
+            <t t-if="product.product_wh_qty > 0">
+                <div class="alert alert-success mt-3" role="alert">
+                    Available: <strong><t t-esc="product.product_wh_qty"/></strong> units
+                </div>
+            </t>
+            <t t-else="">
+                <div class="alert alert-danger mt-3" role="alert">
+                    Out of stock
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

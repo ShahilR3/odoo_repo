@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="property_rent_lease_list_view" model="ir.ui.view">
+        <field name="name">property_rent_lease_list</field>
+        <field name="model">property.rent.lease</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="tenant_id"/>
+                <field name="property_type"/>
+                <field name="total_days"/>
+                <field name="currency_id" optional="hidden"/>
+                <field name="total_amount"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+    <record id="property_rent_lease_form_view" model="ir.ui.view">
+        <field name="name">property_rent_lease_form</field>
+        <field name="model">property.rent.lease</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" type="object" string="Submit" invisible="state!='draft'"
+                            class="oe_highlight"/>
+                    <button name="action_approve" type="object" string="Approve" class="oe_highlight"
+                            groups="property_management.property_management_manager" invisible="state!='submit'"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            groups="property_management.property_management_manager" invisible="state!='submit'"/>
+                    <button name="action_confirm" type="object" string="Confirm" class="oe_highlight"
+                            invisible="state!='approve'"/>
+                    <button name="action_invoice_form" type="object" string="Create Invoice" class="oe_highlight"
+                            invisible="state != 'confirm' or vanish_inv==True"/>
+                    <button name="action_closed" type="object" string="Closed"
+                            invisible="state!='confirm' or state=='return' or state=='expired'"/>
+                    <button name="action_returns" type="object" string="Returns"
+                            invisible="state!='confirm' or state=='closed' or state=='expired'"/>
+                    <button name="action_expired" type="object" string="Expired"
+                            invisible="state!='confirm' or state=='closed' or state=='return'"/>
+                    <button name="action_reset" type="object" string="Reset to draft"
+                            invisible="state=='draft' or state=='submit'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="submit,approve,reject" invisible="state == 'confirm'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirm,return,expired,closed"
+                           invisible="state != 'confirm'"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_get_invoice" type="object"
+                                class="oe_stat_button fa-solid" icon="fa-pencil-square-o">
+                            <field name="invoice_count" widget="statinfo" string="Invoice"/>
+                        </button>
+                    </div>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="tenant_id" readonly="state!='draft'"/>
+                            <field name="property_type" readonly="state!='draft'"/>
+                        </group>
+                        <group>
+                            <field name="start_date" string="Date" widget="daterange"
+                                   options="{'end_date_field':'end_date'}" readonly="state!='draft'"/>
+                            <field name="end_date" placeholder="End Date" invisible="1"/>
+                            <field name="due_date" placeholder="Due date" readonly="state!='draft'"/>
+                            <field name="total_days"/>
+                            <field name="company_id" readonly="state!='draft'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Property">
+                            <field name="property_line_ids" id="property_line_template" readonly="state!='draft'">
+                                <list editable="bottom">
+                                    <field name="intermediate_management_id"/>
+                                    <field name="owner_id"/>
+                                    <field name="date"/>
+                                    <field name="quantity"/>
+                                    <field name="invoiced_qty"/>
+                                    <field name="currency_id" optional="hidden"/>
+                                    <field name="amount" widget="monetary"/>
+                                    <field name="total_amount"/>
+                                </list>
+                            </field>
+                            <group>
+                                <div class="o_group row align-items-start mt-2 mt-md-0">
+                                    <div class="o_inner_group oe_subtotal_footer d-flex order-0 order-lg-1
+                                    flex-column">
+                                        <h3>Total Amount:</h3>
+                                        <div class="o_inner_group grid oe_subtotal_footer d-flex order-0 order-lg-1
+                                    flex-column">
+                                            <field name="currency_id" invisible="1"/>
+                                            <field name="total_amount"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="property_rent_lease_search_view" model="ir.ui.view">
+        <field name="name">property.rent.lease.search</field>
+        <field name="model">property.rent.lease</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter name="Rent" domain="[('property_type','=','rent')]"/>
+                <filter name="Lease" domain="[('property_type','=','lease')]"/>
+                <group>
+                    <filter string="Property Type" name="property_type" context="{'group_by':'property_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="action_property_rent_lease" model="ir.actions.act_window">
+        <field name="name">Rent/Lease</field>
+        <field name="res_model">property.rent.lease</field>
+        <field name="view_mode">list,form,search</field>
+        <field name="view_ids" eval="[
+        (ref('property_rent_lease_list_view'), 'list'),
+        (ref('property_rent_lease_form_view'), 'form'),
+        (ref('property_rent_lease_search_view'),'search')]"/>
+    </record>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <record id="module_category_project_template" model="ir.module.category">
+        <field name="name">Project Template</field>
+        <field name="description">Manage Properties</field>
+    </record>
+    <record id="project_template_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_project_template"/>
+    </record>
+    <record id="project_template_user" model="res.groups">
+        <field name="name">Users</field>
+        <field name="category_id" ref="module_category_project_template"/>
+    </record>
+</odoo>

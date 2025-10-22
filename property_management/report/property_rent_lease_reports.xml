@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="paperformat_a3" model="report.paperformat">
+        <field name="name">A3 Landscape</field>
+        <field name="default" eval="False"/>
+        <field name="format">A3</field>
+        <field name="orientation">Portrait</field>
+        <field name="header_line" eval="True"/>
+    </record>
+    <record id="action_rent_lease_report_pdf" model="ir.actions.report">
+        <field name="name">Property Management</field>
+        <field name="model">make.property.rent.lease</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">property_management.property_rent_lease_templates</field>
+        <field name="report_file">property_management.property_rent_lease_templates</field>
+        <field name="paperformat_id" ref="property_management.paperformat_a3"/>
+    </record>
+</odoo>

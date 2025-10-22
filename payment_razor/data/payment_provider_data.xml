@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="payment_provider_razor" model="payment.provider">
+        <field name="name">Razor</field>
+        <field name="code">draco</field>
+        <field name="sequence">50</field>
+        <field name="module_id" ref="base.module_payment_razor"/>
+        <field name="image_128" type="base64" file="payment_razor/static/description/iconpay.png"/>
+        <field name="payment_method_ids"
+               eval="[Command.set([
+                         ref('payment.payment_method_card'),
+                         ref('payment.payment_method_netbanking'),
+                         ref('payment.payment_method_upi'),
+                         ref('payment.payment_method_wallets_india'),
+                         ref('payment.payment_method_paylater_india'),
+                         ref('payment.payment_method_emi_india'),
+                     ])]"/>
+    </record>
+</odoo>

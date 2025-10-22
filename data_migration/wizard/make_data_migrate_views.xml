@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="data_migrate_wizard" model="ir.ui.view">
+        <field name="name">data_migrate_wizard_form</field>
+        <field name="model">make.data.migrate</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <h2>Migrate Invoicing Datas</h2>
+                </header>
+                <div>
+                    <group>
+                        <group>
+                            <span>Source Details</span>
+                            <field name="url_db1"/>
+                            <field name="db_1"/>
+                            <field name="username_db_1"/>
+                            <field name="password_db_1" password="True"/>
+                        </group>
+                        <group>
+                            <span>Destination Details</span>
+                            <field name="url_db2"/>
+                            <field name="db_2"/>
+                            <field name="username_db_2"/>
+                            <field name="password_db_2" password="True"/>
+                        </group>
+                    </group>
+                </div>
+                <footer>
+                    <button name="action_configuration" class="oe_highlight" type="object" string="Migrate"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_data_migrate_wizard" model="ir.actions.act_window">
+        <field name="name">Migrate Data</field>
+        <field name="res_model">make.data.migrate</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="data_migrate_wizard"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

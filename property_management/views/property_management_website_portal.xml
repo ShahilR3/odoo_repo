@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_my_home_menu_rent" name="Breadcrumb: Rent Lease Order"
+              inherit_id="portal.portal_breadcrumbs" priority="20">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name in ['rent_lease', 'rentlease_val']"
+                class="breadcrumb-item">
+                <a href="/my/rentlease">Rent Lease</a>
+            </li>
+            <li t-if="page_name == 'rentlease_val'"
+                class="breadcrumb-item active"
+                aria-current="page">
+                <span t-out="rent_lease_order.name"/>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="portal_my_home_rent_lease" name="Rent/Lease" customize_show="True" inherit_id="portal.portal_my_home"
+              priority="45">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="after">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_client_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/web/static/img/folder.svg'"/>
+                <t t-set="title">Rent / Lease</t>
+                <t t-set="url" t-value="'/my/rentlease'"/>
+                <t t-set="text">View your rental and lease orders</t>
+                <t t-set="placeholder_count" t-value="'rent_lease_count'"/>
+            </t>
+        </div>
+    </template>
+    <template id="portal_my_rent_lease" name="My Rent / Lease Orders">
+        <t t-call="portal.portal_layout">
+            <t t-if="not orders">
+                <div class="alert alert-warning" role="alert">
+                    There are no rent or lease orders.
+                </div>
+            </t>
+            <t t-if="orders" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>
+                            <span class='d-none d-md-inline'>Rent/Lease Order #</span>
+                        </th>
+                        <th class="text-end">Order Date</th>
+                        <th class="text-end">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="orders" t-as="order">
+                        <td>
+                            <a t-attf-href="/my/rentlease/{{ order.id }}">
+                                <span t-esc="order.name"/>
+                            </a>
+                        </td>
+                        <td class="text-end">
+                            <t t-esc="order.start_date.strftime('%Y-%m-%d')"/>
+                        </td>
+                        <td class="text-end">
+                            <t t-esc="order.currency_id.symbol"/>
+                            <t t-esc="order.total_amount"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </t>
+        </t>
+    </template>
+    <template id="rent_lease_order_portal_template" name="Rent Lease Order" inherit_id="portal.portal_sidebar"
+              primary="True">
+        <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+            <t t-set="o_portal_fullwidth_alert">
+                <t t-call="portal.portal_back_in_edit_mode"/>
+            </t>
+            <div class="row o_portal_sale_sidebar">
+                <t t-call="portal.portal_record_sidebar" id="sale_order_portal_sidebar">
+                    <t t-set="classes" t-value="'col-lg-4 col-xxl-3 d-print-none'"/>
+                    <t t-set="title">
+                        <h2 t-field="object.total_amount" data-id="total_amount" class="mb-0 text-break"/>
+                    </t>
+                    <t t-set="entries">
+                        <div class="d-flex flex-column gap-4 mt-3">
+                            <div class="navspy flex-grow-1 ps-0" t-ignore="true" role="complementary">
+                                <ul class="nav flex-column bs-sidenav"></ul>
+                            </div>
+                            <div t-if="object.user_id">
+                                <h6>
+                                    <small class="text-muted">Your contact</small>
+                                </h6>
+                                <t t-call="portal.portal_my_contact">
+                                    <t t-set="_contactAvatar"
+                                       t-value="image_data_uri(object.user_id.avatar_128)"/>
+                                    <t t-set="_contactName" t-value="object.user_id.name"/>
+                                    <t t-set="_contactLink" t-value="True"/>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+                <div id="quote_content" class="col-12 col-lg-8 col-xxl-9 mt-5 mt-lg-0">
+                    <div class="container my-5">
+                        <div class="row">
+
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h2>
+                                    Rent Lease -
+                                    <em t-out="object.name"/>
+                                </h2>
+                            </div>
+
+                            <div id="content">
+                                <div class="row">
+                                    <div class="col-12 col-lg-6 mb-4">
+                                        <h5 class="mb-1">Lease Information</h5>
+                                        <hr class="mt-1 mb-2"/>
+                                        <table class="table table-borderless table-sm">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="ps-0 pb-0">Start Date:</th>
+                                                    <td class="w-100 pb-0 text-wrap">
+                                                        <span t-field="object.start_date"
+                                                              t-options='{"widget": "date"}'/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="ps-0 pb-0">End Date:</th>
+                                                    <td class="w-100 pb-0 text-wrap">
+                                                        <span t-field="object.end_date"
+                                                              t-options='{"widget": "date"}'/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="ps-0 pb-0">NO.of.Days:</th>
+                                                    <td class="w-100 pb-0 text-wrap">
+                                                        <span t-field="object.total_days"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-12 col-lg-6 mb-4">
+                                        <h5 class="mb-1">Tenant Information</h5>
+                                        <hr class="mt-1 mb-2"/>
+                                        <div t-field="object.tenant_id"
+                                             t-options="{'widget': 'contact', 'fields': ['name', 'address', 'phone', 'email']}"/>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive mt-4">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th class="text-end">Quantity</th>
+                                                <th class="text-end">Price</th>
+                                                <th class="text-end">Subtotal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="object.property_line_ids" t-as="line">
+                                                <tr>
+                                                    <td>
+                                                        <span t-field="line.property_name"/>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <span t-field="line.quantity"/>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <span t-field="line.amount"/>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <span t-field="line.total_amount"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-xs-7 col-md-5 ms-auto mt-4">
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <th>Total:</th>
+                                            <td class="text-end">
+                                                <span t-field="object.total_amount"
+                                                      t-options='{"widget": "monetary", "display_currency": object.currency_id}'/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div id="rent_lease_order_communication">
+                        <h3>Communication history</h3>
+                        <t t-call="portal.message_thread"/>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

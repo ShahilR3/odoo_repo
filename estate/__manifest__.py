@@ -1,0 +1,20 @@
+{
+    'name': "Real estate",
+    'version': "18.0.1.1",
+    'license': "LGPL-3",
+    'summary': """A real estate application""",
+    'description': """from real estate advertisement to entire sales order it manages everything""",
+    'author': "Draco",
+    'category': "Business",
+    'data':['security/ir.model.access.csv',
+            'views/estate_property_views.xml',
+            'views/estate_property_offer.xml',
+            'views/estate_property_types.xml',
+            'views/estate_property_tags.xml',
+            'views/estate_menus.xml',
+            ],
+    'sequence': 1,
+    'application': True,
+    'auto_install': True,
+    'installable': True
+}

@@ -1,0 +1,19 @@
+<odoo>
+    <template id="sale_order_return_order_btn"
+              inherit_id="sale.sale_order_portal_content"
+              name="Return">
+        <xpath expr="//div[@id='introduction']//div[@id='intro_row']//h2"
+               position="after">
+            <div class="container py-5 text-center">
+                <button type="button" class="btn btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#returnOrderModal">
+                    Return Order
+                </button>
+            </div>
+            <t t-call="multiple_product_return.return_order_template">
+                <t t-set="order" t-value="sale_order"/>
+            </t>
+        </xpath>
+    </template>
+</odoo>

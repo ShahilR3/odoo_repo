@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="project_template_task_list_view" model="ir.ui.view">
+        <field name="name">project.template.task.list</field>
+        <field name="model">project.template.task</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="partner_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="project_template_task_form_view" model="ir.ui.view">
+        <field name="name">project.template.task.form</field>
+        <field name="model">project.template.task</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_create_task" string="Create Task" type="object" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <div>
+                        <h1>
+                            <field name="name" placeholder="eg.Task"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="milestone_id"/>
+                            <field name="user_ids" widget="many2many_avatar_user"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="date_deadline"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="description" string="Description">
+                            <field name="description" options="{'resizable': false}"
+                                   placeholder="Project description..."/>
+                        </page>
+                        <page name="Subtask">
+                            <field name="child_ids"
+                                   mode="list"
+                                   context="{
+                                        'default_project_id': project_id,
+                                        'default_user_ids': user_ids,
+                                        'default_parent_id': id,
+                                        'default_partner_id': partner_id,
+                                        'default_milestone_id': milestone_id,
+                                   }"
+                                   widget="subtasks_one2many">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="project_id" string="Project" optional="hide" widget="project"/>
+                                    <field name="milestone_id"
+                                           optional="hide"
+                                           context="{'default_project_id': project_id}"/>
+                                    <field name="partner_id" optional="hide" widget="res_partner_many2one"
+                                           invisible="not project_id"/>
+                                    <field name="user_ids" widget="many2many_avatar_user" optional="show"/>
+                                    <field name="date_deadline"
+                                           optional="hide"
+                                           decoration-danger="date_deadline and date_deadline &lt; current_date"/>
+                                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"
+                                           optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_task_template" model="ir.actions.act_window">
+        <field name="name">Task Template</field>
+        <field name="res_model">project.template.task</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[
+            (ref('project_template_task_list_view'), 'list'),
+            (ref('project_template_task_form_view'), 'form'),
+        ]"/>
+    </record>
+</odoo>

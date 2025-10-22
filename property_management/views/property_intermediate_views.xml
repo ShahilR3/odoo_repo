@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="property_intermediate" model="ir.ui.view">
+        <field name="name">property.intermediate.list</field>
+        <field name="model">property.intermediate</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="intermediate_management_id"/>
+                <field name="owner_id"/>
+                <field name="name"/>
+                <field name="type"/>
+                <field name="currency_id" optional="hidden"/>
+                <field name="amount"/>
+                <field name="total_amount"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_property_intermediate" model="ir.actions.act_window">
+        <field name="name">Property Intermediate</field>
+        <field name="res_model">property.intermediate</field>
+        <field name="view_mode">list</field>
+    </record>
+</odoo>

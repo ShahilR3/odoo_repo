@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="partner_line_header_extension" t-inherit="point_of_sale.PartnerList" t-inherit-mode="extension">
+        <xpath expr="//table/thead/tr/th[.='Contact']" position="after">
+            <th class="py-2">Limit</th>
+            <th class="py-2">Value</th>
+        </xpath>
+    </t>
+</templates>

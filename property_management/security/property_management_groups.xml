@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="module_category_property_management" model="ir.module.category">
+        <field name="name">Property Management</field>
+        <field name="description">Manage Properties</field>
+    </record>
+    <record id="property_management_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_property_management"/>
+    </record>
+    <record id="property_management_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_property_management"/>
+    </record>
+</odoo>

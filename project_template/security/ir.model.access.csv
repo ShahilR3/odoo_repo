@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_manager,project_template_project_manager,model_project_template,project_template_manager,1,1,1,1
+access_project_user,project_template_project_user,model_project_template,project_template_user,1,1,1,1
+access_project_task_manager,project_template_project_task_manager,model_project_template_task,project_template_manager,1,1,1,1
+access_project_task_user,project_template_project_task_user,model_project_template_task,project_template_user,1,1,1,1

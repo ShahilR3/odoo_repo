@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="owl.RangeField" owl="1">
+        <div>
+            <label for="range1" class="form-label"><span t-esc="state.count"></span></label>
+            <input type="range" t-att-min="state.min" t-att-max="state.max" t-att-step="state.step"
+                   t-att-value="state.count"
+                   t-on-change="onSlide"/>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,46 @@
+<odoo>
+    <template id="property_line_template" name="Property Line Template">
+        <t t-foreach="lines" t-as="line">
+            <tr class="property_order_line">
+                <td class="property">
+                    <t t-esc="line.intermediate_management_id.name"/>
+                </td>
+                <td class="owner">
+                    <t t-esc="line.intermediate_management_id.owner_id.name"/>
+                </td>
+                <td class="build_date">
+                    <t t-esc="line.intermediate_management_id.build_date"/>
+                </td>
+                <td>
+                    <input type="number"
+                           name="quantity"
+                           value="0"
+                           class="form-control quantity_input"
+                           t-att-data-amount="line.amount"
+                           t-att-data-compute-amount="line.total_amount"/>
+
+                </td>
+                <td class="invoiced_qty">
+                    <input type="number"
+                           name="invoiced_qty"
+                           value="0"
+                           class="form-control"
+                           readonly="True"/>
+                </td>
+                <td class="amount">
+                    <t t-esc="line.currency_id.symbol"/>
+                    <span class="amount_per_unit" name="amount">
+                        <t t-esc="line.amount"/>
+                    </span>
+                </td>
+                <td class="total_amount">
+                    <t t-esc="line.currency_id.symbol"/>
+                    <span class="total-amount" name="total_amount">0.00</span>
+                </td>
+                <td>
+                    <button type="button" class="btn fa fa-trash-o remove_line text-danger"/>
+                </td>
+            </tr>
+        </t>
+    </template>
+</odoo>

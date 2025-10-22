@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="property_root" name="Property"/>
+    <menuitem id="configuration_menu" name="Configuration" parent="property_root" sequence="3"/>
+    <menuitem id="property_menu" action="action_Property_Config" parent="configuration_menu"/>
+    <menuitem id="rent_lease_menu"
+              action="action_property_rent_lease"
+              parent="property_root"
+              sequence="1"/>
+    <menuitem id="facilities_menu" action="action_property_facility" parent="configuration_menu"/>
+    <menuitem id="reporting_menu" name="Reporting"
+              action="action_property_management_wizard"
+              parent="property_root"
+              sequence="2"/>
+</odoo>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="property_rent_lease_templates">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <br/>
+                    <br/>
+                    <h2 align="center">Rent/Lease Report</h2>
+                    <br/>
+                    <div>
+                        <t t-foreach="filters" t-as="item">
+                            <div style="display: inline-block; min-width: 100px; margin-right: 250px; margin-bottom: 10px;">
+                                <strong t-out="item['label']"/>:
+                                <span t-out="item['value']"/>
+                            </div>
+                        </t>
+                    </div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <table class="table o_main_table table-borderless">
+                        <thead style="display: table-row-group">
+                            <tr>
+                                <th>
+                                    <b>RENT/LEASE NO</b>
+                                </th>
+                                <th t-if="not tenant_id">
+                                    <b>TENANT</b>
+                                </th>
+                                <th t-if="not type">
+                                    <b>TYPE</b>
+                                </th>
+                                <th t-if="not property_id">
+                                    <b>PROPERTY</b>
+                                </th>
+                                <th t-if="not owner_id">
+                                    <b>OWNER</b>
+                                </th>
+                                <th t-if="not from_date" style="text-align:right;">
+                                    <b>FROM DATE</b>
+                                </th>
+                                <th t-if="not to_date" style="text-align:right;">
+                                    <b>TO DATE</b>
+                                </th>
+                                <th style="text-align:right;">
+                                    <b>AMOUNT</b>
+                                </th>
+                                <th t-if="not state">
+                                    <b>STATE</b>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="records" t-as="rec">
+                                <tr>
+                                    <td>
+                                        <span t-out="rec.get('id')"/>
+                                    </td>
+                                    <td t-if="not tenant_id">
+                                        <span t-out="rec.get('tenant_name')"/>
+                                    </td>
+                                    <td t-if="not type">
+                                        <span t-out="rec.get('property_type_display')"/>
+                                    </td>
+                                    <td t-if="not property_id">
+                                        <span t-out="rec.get('property_name')"/>
+                                    </td>
+                                    <td t-if="not owner_id">
+                                        <span t-out="rec.get('owner_name')"/>
+                                    </td>
+                                    <td t-if="not from_date" align="right">
+                                        <span t-out="rec.get('start_date')"/>
+                                    </td>
+                                    <td t-if="not to_date" align="right">
+                                        <span t-out="rec.get('end_date')"/>
+                                    </td>
+                                    <td align="right">
+                                        <span t-out="rec.get('symbol')"/>
+                                        <span t-out="rec.get('in_total_amount')"/>
+                                    </td>
+                                    <td t-if="not state">
+                                        <span t-out="rec.get('state_display')"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

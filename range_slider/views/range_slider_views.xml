@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="range_slider_form_view" model="ir.ui.view">
+        <field name="name">range_slider_form</field>
+        <field name="model">range.slider</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="range_value" widget="range_val" options="{'min':10, 'max':10000}"/>
+            </form>
+        </field>
+    </record>
+    <record id="action_range_menu" model="ir.actions.act_window">
+        <field name="name">Range</field>
+        <field name="res_model">range.slider</field>
+        <field name="view_mode">form</field>
+        <field name="views" eval="[
+            (ref('range_slider_form_view'), 'form')
+        ]"/>
+    </record>
+</odoo>

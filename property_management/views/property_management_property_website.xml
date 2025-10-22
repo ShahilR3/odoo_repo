@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="property_carousel_snippet" name="Property Page">
+        <section class="s_property_carousel">
+            <div class="container pt-5 pb-5">
+                <div class="swiper mySwiper">
+                    <style>
+                        .swiper-button-prev{
+                        left:-50px;
+                        }
+                        .swiper-button-next{
+                        right:-10px;
+                        }
+                    </style>
+                    <div class="swiper-wrapper">
+                        <div class="inside">
+                        </div>
+                    </div>
+                    <div class="swiper-button-prev d-block custom-swiper-btn"/>
+                    <div class="swiper-button-next d-block custom-swiper-btn"/>
+                </div>
+            </div>
+        </section>
+    </template>
+    <template id="template_property_detail" name="Property Details">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+                <div class="container py-4">
+                    <div class="row">
+                        <style>
+                            .card-img-left {
+                            height: 400px;
+                            object-fit: cover;
+                            width: 100%;
+                            }
+                        </style>
+                        <div class="col-md-6">
+                            <div class="card flex-row shadow-sm">
+                                <img class="card-img-left" t-if="order.image_property"
+                                     t-att-src="image_data_uri(order.image_property)"
+                                     alt="Property Image" style="width: 750px;"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ps-5">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p class="mb-0">
+                                    <b>Property Name:</b>
+                                    <t t-out="order.name"/>
+                                </p>
+                                <span class="badge bg-primary text-white"
+                                      style="font-size: 1.1rem; padding: 0.5rem 1rem;">
+                                    <div t-field="order.state"/>
+                                </span>
+                            </div>
+                            <br/>
+                            <p>
+                                <b>Owner Name:</b>
+                                <t t-out="order.owner_id.name"/>
+                            </p>
+                            <div class="d-flex">
+                                <div style="min-width: 150px;">
+                                    <strong>Owner Address:</strong>
+                                </div>
+                                <div class="o_address_format" name="div_address">
+                                    <div t-if="order.street">
+                                        <t t-esc="order.street"/>
+                                    </div>
+                                    <div t-if="order.street2">
+                                        <t t-esc="order.street2"/>
+                                    </div>
+                                    <div>
+                                        <t t-if="order.city">
+                                            <t t-esc="order.city"/>
+                                        </t>
+                                        <t t-if="order.state_id">
+                                            ,
+                                            <t t-out="order.state_id.name"/>
+                                        </t>
+                                        <t t-if="order.zip">
+                                            ,
+                                            <t t-esc="order.zip"/>
+                                        </t>
+                                    </div>
+                                    <div t-if="order.country_id">
+                                        <t t-out="order.country_id.name"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <p>
+                                <b>Facilities:</b>
+                                <t t-foreach="order.facility_ids" t-as="facility">
+                                    <span class="badge bg-primary text-white" style="margin-right: 4px;">
+                                        <t t-esc="facility.name"/>
+                                    </span>
+                                </t>
+                            </p>
+                            <p>
+                                <b>Build date:</b>
+                                <t t-out="order.build_date"/>
+                            </p>
+                            <p>
+                                <b>Rental Price:</b>
+                                <t t-out="order.currency_id.symbol"/>
+                                <t t-out="order.rent"/>
+                            </p>
+                            <p>
+                                <b>Lease Amount:</b>
+                                <t t-out="order.currency_id.symbol"/>
+                                <t t-out="order.legal_amount"/>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="property_carousel_snippet_item" inherit_id="website.snippets">
+        <xpath expr="//snippets[@id='snippet_groups']//t[@t-snippet][last()]" position="before">
+            <t t-snippet="property_management.property_carousel_snippet"
+               string="Properties Available"
+               data-snippet-category="property"/>
+        </xpath>
+    </template>
+</odoo>

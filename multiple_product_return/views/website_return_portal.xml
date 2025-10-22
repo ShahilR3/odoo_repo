@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_my_home_menu_return" name="Breadcrumb: Return Order"
+              inherit_id="portal.portal_breadcrumbs" priority="20">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name in ['return_order', 'returnorder_val']"
+                class="breadcrumb-item">
+                <a href="/my/returnorder">Return Order</a>
+            </li>
+            <li t-if="page_name == 'returnorder_val'"
+                class="breadcrumb-item active"
+                aria-current="page">
+                <span t-out="return_order.name"/>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="portal_my_home_return_order" name="Return Order" customize_show="True" inherit_id="portal.portal_my_home"
+              priority="45">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="after">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_client_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/web/static/img/folder.svg'"/>
+                <t t-set="title">Return Order</t>
+                <t t-set="url" t-value="'/my/returnorder'"/>
+                <t t-set="text">View your Return orders</t>
+                <t t-set="placeholder_count" t-value="'return_order_count'"/>
+            </t>
+        </div>
+    </template>
+    <template id="portal_my_return_order" name="My Return Orders">
+        <t t-call="portal.portal_layout">
+            <t t-if="not orders">
+                <div class="alert alert-warning" role="alert">
+                    There are no return orders.
+                </div>
+            </t>
+            <t t-if="orders" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>
+                            <span class='d-none d-md-inline'>Return Order #</span>
+                        </th>
+                        <th class="text-end">Order Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="orders" t-as="order">
+                        <td>
+                            <a t-attf-href="/my/returnorder/{{ order.id }}">
+                                <span t-esc="order.name"/>
+                            </a>
+                        </td>
+                        <td class="text-end">
+                            <t t-esc="order.create_date.strftime('%Y-%m-%d')"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </t>
+        </t>
+    </template>
+    <template id="return_order_portal_template" name="Return Order" inherit_id="portal.portal_sidebar"
+              primary="True">
+        <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+            <t t-set="o_portal_fullwidth_alert">
+                <t t-call="portal.portal_back_in_edit_mode"/>
+            </t>
+            <div class="row o_portal_sale_sidebar">
+                <t t-call="portal.portal_record_sidebar" id="sale_order_portal_sidebar">
+                    <t t-set="classes" t-value="'col-lg-4 col-xxl-3 d-print-none'"/>
+                    <t t-set="entries">
+                        <div class="d-flex flex-column gap-4 mt-3">
+                            <div class="navspy flex-grow-1 ps-0" t-ignore="true" role="complementary">
+                                <ul class="nav flex-column bs-sidenav"></ul>
+                            </div>
+                            <div t-if="object.user_id">
+                                <h6>
+                                    <small class="text-muted">Your contact</small>
+                                </h6>
+                                <t t-call="portal.portal_my_contact">
+                                    <t t-set="_contactAvatar"
+                                       t-value="image_data_uri(object.user_id.avatar_128)"/>
+                                    <t t-set="_contactName" t-value="object.user_id.name"/>
+                                    <t t-set="_contactLink" t-value="True"/>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+                <div id="quote_content" class="col-12 col-lg-8 col-xxl-9 mt-5 mt-lg-0">
+                    <div class="container my-5">
+                        <div class="row">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h2>
+                                    Return Order -
+                                    <em t-out="object.name"/>
+                                </h2>
+                            </div>
+                            <div id="content">
+                                <div class="row">
+                                    <div class="col-12 col-lg-6 mb-4">
+                                        <h5 class="mb-1">Return Information</h5>
+                                        <hr class="mt-1 mb-2"/>
+                                        <table class="table table-borderless table-sm">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="ps-0 pb-0">Creation Date:</th>
+                                                    <td class="w-100 pb-0 text-wrap">
+                                                        <span t-field="object.create_date"
+                                                              t-options='{"widget": "date"}'/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="ps-0 pb-0">Sale Order:</th>
+                                                    <td class="w-100 pb-0 text-wrap">
+                                                        <span t-field="object.sale_order_id"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive mt-4">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th class="text-end"> Delivered Quantity</th>
+                                                <th class="text-end">Return Quantity</th>
+                                                <th class="text-end">Reason</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="object.order_line_ids" t-as="line">
+                                                <tr>
+                                                    <td>
+                                                        <span t-field="line.product_id"/>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <span t-field="line.delivered_qty"/>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <span t-field="line.return_qty"/>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <span t-field="line.reason"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div id="return_order_communication">
+                        <h3>Communication history</h3>
+                        <t t-call="portal.message_thread"/>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
