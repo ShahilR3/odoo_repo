@@ -7,6 +7,8 @@
             <list>
                 <field name="name"/>
                 <field name="type"/>
+                <field name="rev_type" invisible="type=='product'"/>
+                <field name="user_id"/>
             </list>
         </field>
     </record>
@@ -30,7 +32,9 @@
                             <field name="start_date" string="Date" widget="daterange"
                                    options="{'end_date_field':'end_date'}"/>
                             <field name="end_date" invisible="1" placeholder="End Date"/>
-                            <field name="user_id" invisible="type=='product'"/>
+                            <field name="user_id"/>
+                            <field name="sale_order_ids" widget="many2many_tags"/>
+                            <field name="active"/>
                         </group>
                     </group>
                     <notebook>
@@ -39,7 +43,9 @@
                                 <list editable="bottom">
                                     <field name="product_id"/>
                                     <field name="product_categ_id"/>
-                                    <field name="max_commission_amount"/>
+                                    <field name="currency_id" optional="hidden"/>
+                                    <field name="max_commission_amount" widget="monetary"
+                                           options="{'currency_field':'currency_id'}"/>
                                     <field name="rate" widget="percentage"/>
                                 </list>
                             </field>
@@ -48,6 +54,7 @@
                             <field name="revenue_ids">
                                 <list editable="bottom">
                                     <field name="sequence_number"/>
+                                    <field name="currency_id" optional="hidden"/>
                                     <field name="from_amount" widget="monetary"
                                            options="{'currency_field':'currency_id'}"/>
                                     <field name="to_amount" widget="monetary"
@@ -59,7 +66,9 @@
                     </notebook>
                     <div style="{text-align:right}">
                         <group>
-                            <field name="commission_amount" invisible="type=='product'"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="commission_amount" widget="monetary"
+                                   options="{'currency_field' : 'currency_id'}"/>
                         </group>
                     </div>
                 </sheet>
@@ -67,14 +76,14 @@
         </field>
     </record>
     <record id="action_crm_commission" model="ir.actions.act_window">
-        <field name="name">Commission</field>
+        <field name="name">Commission Plan</field>
         <field name="res_model">crm.commission</field>
         <field name="view_mode">list,form</field>
         <field name="view_ids" eval="[
         (ref('crm_commission_list_view'), 'list'),
         (ref('crm_commission_form_view'), 'form')]"/>
     </record>
-    <menuitem name="Crm Commission" id="crm_commission"
+    <menuitem name="Commission Plan" id="crm_commission_plan"
               action="action_crm_commission"
               parent="crm.crm_menu_root"/>
 </odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_move_view_form" model="ir.ui.view">
+        <field name="name">account.view.move.form.inherited</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button name="action_view_stock_moves"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-exchange" invisible="state !='posted'">
+                    <span class="o_stat_text">Stock Moves</span>
+                </button>
+            </xpath>
+            <xpath expr="//group[@id='header_right_group']" position="inside">
+                <group>
+                    <field name="location_source_id"/>
+                    <field name="location_dest_id"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
