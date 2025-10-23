@@ -1,6 +1,6 @@
-# -*- coding: utf
+# -*- coding: utf-8 -*-
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 class ResPartner(models.Model):
     _inherit = "res.partner"
@@ -19,5 +19,10 @@ class ResPartner(models.Model):
     def compute_pending_sale_order(self):
         """Incomplete Sale order"""
         for partner in self:
-            sale_order = self.env['sale.order'].search([('partner_id', '=', partner.id),('state', '!=', 'sale')])
-            partner.pending_sale_order_ids = sale_order or self.env['sale.order']
+            outstanding_sales = self.env['sale.order'].search([
+                ('partner_id', '=', partner.id),
+                ('state', '=', 'sale'),
+                ('invoice_status', '!=', 'invoiced')
+            ])
+            partner.pending_sale_order_ids = outstanding_sales or self.env['sale.order']
+ 

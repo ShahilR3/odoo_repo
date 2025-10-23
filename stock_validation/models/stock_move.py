@@ -12,5 +12,5 @@ class StockMove(models.Model):
         print(self.expiry_date)
         for line in self.move_ids_without_package:
             exp_date = line.lot_ids.expiration_date
-            if today < exp_date and self.state == 'assigned':
+            if today > exp_date:
                 raise ValidationError("Cannot Perform action")
