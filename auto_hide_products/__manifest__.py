@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 {
     'name': 'Hide products website',
     'sequence': 1,

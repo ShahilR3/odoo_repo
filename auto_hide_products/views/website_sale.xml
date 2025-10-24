@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<odoo>
-    <template id="website_sale_products_item_qty" inherit_id="website_sale.products_item" name="Quantity">
-        <xpath expr="//div[contains(@class, 'o_wsale_product_information')]" position="attributes">
-            <attribute name="invisible">product.product_wh_qty &gt; 0</attribute>
-        </xpath>
-    </template>
-</odoo>
