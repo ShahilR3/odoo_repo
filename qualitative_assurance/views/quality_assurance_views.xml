@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="quality_assurance_list_view" model="ir.ui.view">
+        <field name="name">quality_assurance_list</field>
+        <field name="model">quality.assurance</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="product_id"/>
+                <field name="type"/>
+            </list>
+        </field>
+    </record>
+    <record id="quality_assurance_form_view" model="ir.ui.view">
+        <field name="name">quality_assurance_form</field>
+        <field name="model">quality.assurance</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <field name="product_id"/>
+                        <field name="type"/>
+                        <field name="quality_line_ids">
+                            <list editable="bottom">
+                                <field name="operation_type_id"/>
+                                <field name="warehouse_id"/>
+                                <field name="sequence_id"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_quality_assurance" model="ir.actions.act_window">
+        <field name="name">Quality Assurance</field>
+        <field name="res_model">quality.assurance</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[
+        (ref('quality_assurance_list_view'), 'list'),
+        (ref('quality_assurance_form_view'), 'form')]"/>
+    </record>
+</odoo>

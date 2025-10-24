@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="quality_assurance_root" name="Quality Assurance"/>
+    <menuitem name="Quality Assurance" id="quality_assurance"
+              action="action_quality_assurance"
+              parent="quality_assurance_root"/>
+    <menuitem name="Quality Alert" id="quality_alert"
+              action="action_quality_alert"
+              parent="quality_assurance"/>
+</odoo>
