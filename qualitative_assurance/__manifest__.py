@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 {
     'name': 'Quality Assurance',
     'version': '18.0.1.1.0',
@@ -12,6 +13,8 @@
         'data/ir_sequence_data.xml',
         'views/quality_assurance_views.xml',
         'views/quality_alert_views.xml',
+        'views/quality_test_views.xml',
+        'views/stock_picking_views.xml',
         'views/quality_assurance_menus.xml',
     ],
     'installable': True,

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="quality_test_list_view" model="ir.ui.view">
+        <field name="name">quality_test_list</field>
+        <field name="model">quality.test</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="quality_alert"/>
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="assigned_id"/>
+                <field name="status"/>
+                <field name="result"/>
+            </list>
+        </field>
+    </record>
+    <record id="quality_test_form_view" model="ir.ui.view">
+        <field name="name">quality_test_form</field>
+        <field name="model">quality.test</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="test_type"/>
+                            <field name="result"/>
+                            <field name="status"/>
+                        </group>
+                        <group>
+                            <field name="measure"/>
+                            <field name="quality_alert"/>
+                            <field name="product_id"/>
+                            <field name="assigned_id"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_quality_test" model="ir.actions.act_window">
+        <field name="name">Quality Test</field>
+        <field name="res_model">quality.test</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[
+        (ref('quality_test_list_view'), 'list'),
+        (ref('quality_test_form_view'), 'form')]"/>
+    </record>
+</odoo>

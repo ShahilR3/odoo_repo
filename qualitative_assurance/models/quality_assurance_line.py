@@ -8,6 +8,6 @@ class QualityOperationLine(models.Model):
     _description = 'Quality Assurance Line'
 
     quality_assurance_id = fields.Many2one('quality.assurance', string="Quality Assurance", ondelete="cascade")
-    operation_type_id = fields.Many2one('stock.picking.type', string="Operation Type")
+    operation_type_id = fields.Many2one('stock.picking.type', string="Operation Type", required=True)
     warehouse_id = fields.Many2one(related='operation_type_id.warehouse_id', string="Warehouse")
     sequence_id = fields.Many2one(related='operation_type_id.sequence_id', string="Sequence")

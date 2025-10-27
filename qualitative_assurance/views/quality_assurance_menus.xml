@@ -4,7 +4,12 @@
     <menuitem name="Quality Assurance" id="quality_assurance"
               action="action_quality_assurance"
               parent="quality_assurance_root"/>
+    <menuitem name="Configuration" id="conf"
+              parent="quality_assurance_root"/>
     <menuitem name="Quality Alert" id="quality_alert"
               action="action_quality_alert"
-              parent="quality_assurance"/>
+              parent="conf"/>
+    <menuitem name="Quality Test" id="quality_test"
+              action="action_quality_test"
+              parent="conf"/>
 </odoo>

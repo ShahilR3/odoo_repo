@@ -17,7 +17,7 @@ class CrmCommission(models.Model):
                                        ('revenue', 'Revenue Wise')])
     rev_type = fields.Selection(selection=([('straight', 'Straight Commission'),
                                             ('graduate', 'Graduated Commission')]), default='straight')
-    rate = fields.Float(sting="Rate")
+    rate = fields.Float(string="Rate")
     user_id = fields.Many2one('res.users', string="Salesperson")
     company_id = fields.Many2one('res.company', string="Company", default=lambda self: self.env.company)
     currency_id = fields.Many2one(related='company_id.currency_id', string="Currency")
