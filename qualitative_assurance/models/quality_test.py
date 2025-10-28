@@ -22,6 +22,7 @@ class QualityTest(models.Model):
     assigned_id = fields.Many2one('res.users', string="Assigned To", related="quality_alert_id.assigned_id")
     sale_order_id = fields.Many2one('sale.order', string="Sale Order")
     product_id = fields.Many2one('product.product')
+    partners_ids = fields.Many2many('res.partner', string="Partners")
     value = fields.Char("Value")
 
     @api.depends('result')
@@ -48,3 +49,9 @@ class QualityTest(models.Model):
             self.product_id, 1, self.sale_order_id.partner_id)
         if self.sale_order_id.state != 'sale':
             self.sale_order_id.action_confirm()
+        pricelist = self.env['product.pricelist']
+        pricelist_list = []
+        partners_pricelists = pricelist._get_partner_pricelist_multi(self.partners_ids.ids)
+        for partner_id, pricelist_id in partners_pricelists.items():
+            pricelist_list.append(pricelist_id.name)
+        print(pricelist_list)
