@@ -45,6 +45,7 @@ class RentLease(models.Model):
     rent_id = fields.Monetary(related='property_line_ids.amount')
     property_name = fields.Char(related='property_line_ids.property_name', string="Property Name")
     vanish_inv = fields.Boolean(compute="_compute_vanish_inv")
+    sale_order_id = fields.Many2one('sale.order', string="Sale order")
 
     @api.depends('invoice_ids')
     def _compute_invoice_count(self):

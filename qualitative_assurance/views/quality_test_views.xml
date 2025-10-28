@@ -19,6 +19,10 @@
         <field name="model">quality.test</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button name="action_change" type="object" string="Sale order"
+                            class="oe_highlight"/>
+                </header>
                 <sheet>
                     <h1>
                         <field name="name"/>
@@ -28,6 +32,9 @@
                             <field name="test_type"/>
                             <field name="result"/>
                             <field name="status"/>
+                            <field name="sale_order_id"/>
+                            <field name="product_id"/>
+                            <field name="value"/>
                         </group>
                         <group>
                             <field name="measure"/>
