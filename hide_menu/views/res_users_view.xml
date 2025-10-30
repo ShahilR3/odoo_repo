@@ -6,8 +6,8 @@
         <field name="inherit_id" ref="base.view_users_form"/>
         <field name="arch" type="xml">
             <group name="preferences" position="after">
-                <group string="Menu Visibility">
-                    <field name="hidden_menu_ids" widget="many2many_tags"/>
+                <group>
+                    <field name="hidden_menu_ids"/>
                 </group>
             </group>
         </field>

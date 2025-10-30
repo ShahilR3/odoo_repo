@@ -6,15 +6,16 @@ from odoo import fields,models
 class IrUiMenu(models.Model):
     _inherit = 'ir.ui.menu'
 
-    hidden_menu_ids = fields.Many2many('ir.ui.menu', string='Hidden Menus')
+    hide_users_ids = fields.Many2many('res.users', string='Hide Menu User',
+                                      domain=lambda self: [('id', '!=', self.env.uid)])
 
-    def load_menus(self, debug=False):
-        user = self.env.user
-        self.env['sale.order'].search()
-        hidden_ids = set(user.hidden_menu_ids.ids)
-        flat_menus = super().load_menus(debug)
-        filtered_flat = {mid: m for mid, m in flat_menus.items() if mid not in hidden_ids}
-        for menu in filtered_flat.values():
-            if 'children' in menu:
-                menu['children'] = [cid for cid in menu['children'] if cid in filtered_flat]
-        return filtered_flat
+    # def load_menus(self, debug=False):
+    #     """Loading the menu and hiding the menus selected"""
+    #     user = self.env.user
+    #     hidden_ids = set(user.hidden_menu_ids.ids)
+    #     menus = super().load_menus(debug)
+    #     filtered_menu = {menu_id: menu_values for menu_id, menu_values in menus.items() if menu_id not in hidden_ids}
+    #     for menu in filtered_menu.values():
+    #         if 'children' in menu:
+    #             menu['children'] = [children_id for children_id in menu['children'] if children_id in filtered_menu]
+    #     return filtered_menu

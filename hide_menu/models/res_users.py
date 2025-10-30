@@ -9,5 +9,5 @@ class ResUsers(models.Model):
 
     @api.onchange('hidden_menu_ids')
     def on_change_hidden_menu_ids(self):
-        print("ABC")
+        """On changing the fields calling the menu load function"""
         self.env['ir.ui.menu'].load_menus(False)

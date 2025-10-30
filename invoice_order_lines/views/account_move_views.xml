@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_move_view_form" model="ir.ui.view">
+        <field name="name">account.view.move.form.inherited</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Existing Line">
+                    <button name="action_open_existing_invoices"
+                            string="Add Existing Lines"
+                            type="object"/>
+                    <field name="existing_invoice_line_ids">
+                        <list>
+                            <field name="product_id"/>
+                            <field name="quantity"/>
+                            <field name="product_uom_id"/>
+                            <field name="price_unit"/>
+                            <field name="tax_ids" widget="many2many_tax_tags"/>
+                            <field name="currency_id" optional="hidden"/>
+                            <field name="price_subtotal" string="Amount"/>
+                            <button name="action_add_to_line" type="object"
+                                    string="add to line"
+                                    context="{'active_id': parent.id}"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
