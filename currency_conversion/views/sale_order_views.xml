@@ -8,7 +8,7 @@
             <xpath expr="//field[@name='payment_term_id']" position="after">
                 <field name="currency_select_id"/>
                 <field name="currency_convert_amount" widget="monetary"
-                       options="{'currency_field':'currency_display_id'}"/>
+                       options="{'currency_field':'currency_select_id'}" invisible="not currency_select_id"/>
             </xpath>
         </field>
     </record>

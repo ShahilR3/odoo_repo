@@ -5,6 +5,7 @@
     'sequence': 1,
     'depends': ['base','sale','account'],
     'data':[
+        'security/ir.model.access.csv',
         'views/account_move_views.xml',
     ],
     'installable': True,
