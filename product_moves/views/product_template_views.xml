@@ -6,8 +6,21 @@
         <field name="inherit_id" ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook//page[@name='general_information']" position="inside">
-                <field name="product_move"/>
+                <group>
+                    <field name="product_move"/>
+                    <field name="stock_value"/>
+                </group>
             </xpath>
+        </field>
+    </record>
+    <record id="product_template_view_list" model="ir.ui.view">
+        <field name="name">product.template.list.inherited</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="standard_price" position="after">
+                <field name="stock_value"/>
+            </field>
         </field>
     </record>
 </odoo>
