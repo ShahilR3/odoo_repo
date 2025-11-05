@@ -3,9 +3,11 @@
 {
     'name': 'Product Move',
     'sequence': 1,
-    'depends': ['base','product'],
+    'depends': ['base','product','account'],
     'data':[
         'views/product_template_views.xml',
+        'views/product_product_views.xml',
+        'views/account_debit.xml',
     ],
     'installable': True,
     'application': False,

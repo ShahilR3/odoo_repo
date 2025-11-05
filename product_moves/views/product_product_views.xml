@@ -1,0 +1,16 @@
+<odoo>
+    <record id="view_product_form_inherit_custom_tab" model="ir.ui.view">
+        <field name="name">product.form.inherit.custom.tab</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="custom_info" string="Custom Info">
+                    <group>
+                        <field name="x_custom_note"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

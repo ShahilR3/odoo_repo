@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="action_move_out_debit_type" model="ir.actions.act_window">
+        <field name="name">Debit Notes</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">list,kanban,form,activity</field>
+        <field name="domain">[('debit_origin_id', '!=', False)]</field>
+        <field name="context">{'default_move_type': 'out_invoice'}</field>
+    </record>
+    <menuitem id="menu_account_move_out_debit_type"
+              name="Debit Notes"
+              parent="account.menu_finance"
+              action="action_move_out_debit_type"
+              sequence="20"/>
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="template_product_detail" name="Product Details">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <div class="container py-4">
+                    <form action="/cart/create" method="post">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <label for="product_id">Product</label>
+                        <select name="product_id" id="product_id" class="form-control">
+                            <t t-foreach="product_id" t-as="product">
+                                <option t-att-value="product.product_variant_id.id">
+                                    <t t-esc="product.name"/>
+                                </option>
+                            </t>
+                        </select>
+                        <div class="mb-3">
+                            <label>Quantity:</label>
+                            <input type="number" name="add_qty" value="1" min="1" class="form-control"
+                                   style="width: 120px;"/>
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                            Add to Cart
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

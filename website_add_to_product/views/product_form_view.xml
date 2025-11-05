@@ -1,0 +1,30 @@
+<odoo>
+    <template id="template_product_detail" name="Product Details">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <div class="container py-4">
+                    <form action="/shop/product?redirect=/shop" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <label>Product Image</label>
+                        <input type="file" name="prod_img" class="form-control"/>
+                        <label>Product Name</label>
+                        <input type="text" name="prod_name" class="form-control" style="width: 120px;"/>
+                        <div class="mb-3">
+                            <label>Quantity:</label>
+                            <input type="number" name="add_qty" value="1" min="1" class="form-control"
+                                   style="width: 120px;"/>
+                        </div>
+                        <div class="mb-3">
+                            <label>Price:</label>
+                            <input type="number" name="add_price" value="1" min="0" class="form-control"
+                                   style="width: 120px;"/>
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                            Create
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
