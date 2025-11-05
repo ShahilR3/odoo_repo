@@ -27,8 +27,6 @@ class DataMigrate(models.TransientModel):
         models_2 = xmlrpc.client.ServerProxy(f'{self.url_db2}/xmlrpc/2/object')
         uid_db_1 = common_1.authenticate(self.db_1, self.username_db_1, self.password_db_1, {})
         uid_db2 = common_2.authenticate(self.db_2, self.username_db_2, self.password_db_2, {})
-        print(uid_db_1)
-        print(uid_db2)
         if not uid_db_1 or not uid_db2:
             raise ValidationError("Wrong Credentials")
         moves_src = models_1.execute_kw(self.db_1, uid_db_1, self.password_db_1, 'account.move', 'search_read', [[]],

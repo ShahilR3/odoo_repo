@@ -13,5 +13,5 @@ class SaleOrder(models.Model):
         dozen_uom = self.env['uom.uom'].search([('name', '=', 'Dozens')], limit=1)
         unit_uom = self.env['uom.uom'].search([('name', '=', 'Units')], limit=1)
         sale_order_unit = self.env['sale.order'].browse(active_ids).mapped('order_line').filtered(lambda l:l.product_uom.id == unit_uom.id)
-        if sale_order_unit:
+        if sale_order_unit and self.env['sale.order'].browse(active_ids).mapped('state') == ['draft']:
             sale_order_unit.write({'product_uom': dozen_uom.id})
