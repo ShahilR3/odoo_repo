@@ -7,7 +7,7 @@ from odoo.http import request
 from odoo.addons.website_sale.controllers.main import WebsiteSale
 
 
-class ProductDetaail(WebsiteSale):
+class ProductDetail(WebsiteSale):
 
     @http.route(['/shop/product'], type='http', auth="public", website=True, csrf=True)
     def web_product_form(self, **data):
@@ -26,6 +26,5 @@ class ProductDetaail(WebsiteSale):
                 'image_1920': image_data,
                 'website_published': True,
             })
-            redirect_url = request.params.get('redirect', '/shop')
-            return request.redirect(redirect_url)
+            return request.redirect('/shop')
         return request.render('website_add_to_product.template_product_detail')

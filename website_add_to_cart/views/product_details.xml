@@ -16,12 +16,14 @@
                         </select>
                         <div class="mb-3">
                             <label>Quantity:</label>
-                            <input type="number" name="add_qty" value="1" min="1" class="form-control"
+                            <input type="number" id="add_qty" name="add_qty" value="1" min="1" class="form-control"
                                    style="width: 120px;"/>
                         </div>
-                        <button type="submit" class="btn btn-success">
-                            Add to Cart
-                        </button>
+                        <div class="Add_to_Cart">
+                            <button id="add_cart" type="submit" class="btn btn-success">
+                                Add to Cart
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import api,fields,models
+from odoo import fields,models
 
 class ProductTemplate(models.Model):
     """Inheriting the Model"""
@@ -8,14 +8,10 @@ class ProductTemplate(models.Model):
 
     product_wh_qty = fields.Integer("Product Available", compute="_compute_product_wh_qty")
 
-    @api.depends('product_variant_id')
     def _compute_product_wh_qty(self):
         """To compute the no.of products available"""
-        website = self.env['website'].get_current_website()
+        stock_loc_id_param = self.env['ir.config_parameter'].sudo().get_param('website_product_display.stock_loc_id')
+        stock_loc_id = self.env['stock.location'].browse(int(stock_loc_id_param)) if stock_loc_id_param else False
         for template in self:
-            if website.stock_loc_id:
-                location = website.stock_loc_id
-                product = template.product_variant_id
-                template.product_wh_qty = template.env['stock.quant']._get_available_quantity(product, location)
-            else:
-                template.product_wh_qty = 0.0
+            template.product_wh_qty = template.env['stock.quant']._get_available_quantity(
+                    template.product_variant_id, stock_loc_id) if stock_loc_id else 0
