@@ -8,11 +8,6 @@
         'views/product_details.xml',
         'views/website_menu_views.xml',
     ],
-    # 'assets': {
-    #         'web.assets_frontend': [
-    #             'website_add_to_cart/static/src/js/popup.js',
-    #         ],
-    #     },
     'installable': True,
     'application': False,
     'license': 'LGPL-3',
