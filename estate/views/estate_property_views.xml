@@ -11,17 +11,18 @@
             <field name="name">estate.property.list</field>
             <field name="model">estate.property</field>
             <field name="arch" type="xml">
-                <list decoration-success ="state == 'receive' or state == 'accept'" decoration-bf = "state=='accept'" decoration-muted = "state=='sold'" decoration-danger = "state == 'cancel'">
+                <list decoration-success="state == 'receive' or state == 'accept'" decoration-bf="state=='accept'"
+                      decoration-muted="state=='sold'" decoration-danger="state == 'cancel'">
                     <field name="name"/>
-                    <field name ="type_id"/>
-                    <field name = "Offers"/>
-                    <field name = "es_tag"/>
+                    <field name="type_id"/>
+                    <field name="Offers_ids"/>
+                    <field name="es_tag_ids"/>
                     <field name="postcode"/>
                     <field name="bedrooms"/>
                     <field name="living_area"/>
                     <field name="expected_price"/>
                     <field name="selling_price"/>
-                    <field name="date_availability" optional = "hidden"/>
+                    <field name="date_availability" optional="hidden"/>
                 </list>
             </field>
         </record>
@@ -31,52 +32,56 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name = "sold" type = "object" string="Sold" class = "oe_highlight" invisible = "state == 'sold' or state == 'cancel'" />
-                        <button name = "cancel" type = "object" string = "Cancelled" invisible = "state == 'sold' or state == 'cancel'"/>
-                        <field name="state" widget="statusbar" statusbar_visible="new,receive,accept,sold,cancel" options="{'clickable':'True'}"/>
+                        <button name="action_sold" type="object" string="Sold" class="oe_highlight"
+                                invisible="state == 'sold' or state == 'cancel'"/>
+                        <button name="action_cancel" type="object" string="Cancelled"
+                                invisible="state == 'sold' or state == 'cancel'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="new,receive,accept,sold,cancel"
+                               options="{'clickable':'True'}"/>
                     </header>
                     <sheet>
                         <group>
-                                <h1>
-                                    <field name = "name" placeholder = "Property Name"/>
-                                </h1>
+                            <h1>
+                                <field name="name" placeholder="Property Name"/>
+                            </h1>
                         </group>
-                        <field name="es_tag" widget = "many2many_tags" options="{'color_field' : 'colors'}"/>
+                        <field name="es_tag_ids" widget="many2many_tags" options="{'color_field' : 'colors'}"/>
                         <group>
                             <group>
-                                <field name = "state"/>
-                                <field name = "type_id" widget ="many2one" options = "{'no_create' : True}"/>
-                                <field name = "postcode"/>
-                                <field name = "date_availability"/>
+                                <field name="state"/>
+                                <field name="type_id" widget="many2one" options="{'no_create' : True}"/>
+                                <field name="postcode"/>
+                                <field name="date_availability"/>
                             </group>
                             <group>
-                                <field name = "expected_price"/>
-                                <field name = "best_offer"/>
-                                <field name = "selling_price"/>
+                                <field name="expected_price"/>
+                                <field name="best_offer"/>
+                                <field name="selling_price"/>
                             </group>
                         </group>
                         <notebook>
-                            <page string = "Description">
+                            <page string="Description">
                                 <group>
-                                    <field name = "description"/>
-                                    <field name = "bedrooms"/>
-                                    <field name = "living_area"/>
-                                    <field name = "facades"/>
-                                    <field name = "garage"/>
-                                    <field name = "garden"/>
-                                    <field name = "orientation" invisible = "garden == False"/>
-                                    <field name = "garden_area" invisible = "garden == False"/>
-                                    <field name = "total_area"/>
-                                    <field name = "active"/>
+                                    <field name="description"/>
+                                    <field name="bedrooms"/>
+                                    <field name="living_area"/>
+                                    <field name="facades"/>
+                                    <field name="garage"/>
+                                    <field name="garden"/>
+                                    <field name="orientation" invisible="garden == False"/>
+                                    <field name="garden_area" invisible="garden == False"/>
+                                    <field name="total_area"/>
+                                    <field name="active"/>
                                 </group>
                             </page>
-                            <page string = "Offers">
-                                <field name = "Offers" readonly = "state == 'accept' or state == 'sold' or state == 'cancel'"/>
+                            <page string="Offers">
+                                <field name="Offers_ids"
+                                       readonly="state == 'accept' or state == 'sold' or state == 'cancel'"/>
                             </page>
-                             <page string = "Other Info">
+                            <page string="Other Info">
                                 <group>
-                                    <field name = "salesmen"/>
-                                    <field name = "vendor"/>
+                                    <field name="salesmen_id"/>
+                                    <field name="vendor_id"/>
                                 </group>
                             </page>
                         </notebook>
@@ -90,18 +95,18 @@
             <field name="arch" type="xml">
                 <search>
                     <field name="name"/>
-                    <field name="es_tag"/>
-                    <field name = "type_id"/>
+                    <field name="es_tag_ids"/>
+                    <field name="type_id"/>
                     <field name="postcode"/>
                     <field name="bedrooms"/>
                     <field name="expected_price"/>
                     <field name="selling_price"/>
                     <field name="date_availability"/>
-                    <filter name = "Available" domain = "['|',('state','=','new'),('state','=','receive')]"/>
-                    <filter name = "Active" domain = "[('active' ,'=',False)]"/>
-                    <field name = "living_area" filter_domain = "[('living_area','>=',self)]"/>
+                    <filter name="Available" domain="['|',('state','=','new'),('state','=','receive')]"/>
+                    <filter name="Active" domain="[('active' ,'=',False)]"/>
+                    <field name="living_area" filter_domain="[('living_area','>=',self)]"/>
                     <group>
-                        <filter string = "Postcode" name = "postcode" context = "{'group_by':'postcode'}"/>
+                        <filter string="Postcode" name="postcode" context="{'group_by':'postcode'}"/>
                     </group>
                 </search>
             </field>

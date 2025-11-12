@@ -202,6 +202,36 @@
                     </div>
                 </div>
             </div>
+<!--            <div class="row g-4 mt-4">-->
+<!--                <div class="col-md-12">-->
+<!--                    <div class="card shadow-sm border-0 rounded-3"-->
+<!--                         style="background: #1E1E2F; box-shadow: 0 0 30px rgba(0,0,0,0.8); color:white;">-->
+<!--                        <div class="card-header fw-bold" style="text-align:center;">-->
+<!--                            Top Products Details-->
+<!--                        </div>-->
+<!--                        <div class="card-body">-->
+<!--                            <table class="table table-striped table-dark mb-0">-->
+<!--                                <thead>-->
+<!--                                    <tr>-->
+<!--                                        <th>Product Name</th>-->
+<!--                                        <th>Quantity Sold</th>-->
+<!--                                        <th>Total Revenue</th>-->
+<!--                                    </tr>-->
+<!--                                </thead>-->
+<!--                                <tbody>-->
+<!--                                    <t t-foreach="state.top_products_table" t-as="product" t-key="product.id">-->
+<!--                                        <tr>-->
+<!--                                            <td><t t-esc="product.name"/></td>-->
+<!--                                            <td><t t-esc="product.qty"/></td>-->
+<!--                                            <td><t t-esc="product.revenue"/></td>-->
+<!--                                        </tr>-->
+<!--                                    </t>-->
+<!--                                </tbody>-->
+<!--                            </table>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </t>
 </templates>
